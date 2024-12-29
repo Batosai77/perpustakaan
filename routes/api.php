@@ -14,4 +14,4 @@ Route::get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::apiResource('perpusda', PerpusdaController::class) -> middleware('auth:api');
+Route::apiResource('perpusda', PerpusdaController::class)->middleware('auth:api');
