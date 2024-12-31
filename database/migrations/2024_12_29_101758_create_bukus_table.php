@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('bukus', function (Blueprint $table) {
             $table->id()->primary();
-            $table->unsignedBigInteger('kategori_id');
+            $table->string('nama_kategori', 255);
             $table->string('judul', 255)->nullable();
             $table->string('penulis', 255)->nullable();
             $table->string('penerbit', 255)->nullable();
@@ -25,7 +24,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->timestamps();
 
-            $table->foreign('kategori_id')->references('id')->on('kategoris');           
+            $table->foreign('nama_kategori')->references('nama_kategori')->on('kategoris');
         });
     }
 
