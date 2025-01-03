@@ -3,16 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kategoris;
 use App\Models\Anggota;
 use App\Models\Buku;
+use App\Models\Kategoris;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-
 class PerpusdaCOntroller extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      */
@@ -46,7 +44,7 @@ class PerpusdaCOntroller extends Controller
         // Cari kategori berdasarkan kode
         $kategori = Kategoris::where('nama_kategori', $validatedData['kategori_nama_kategori'])->first();
 
-        if (!$kategori) {
+        if (! $kategori) {
             return response()->json(['error' => 'Kategori tidak ditemukan'], 404);
         }
 
@@ -104,7 +102,7 @@ class PerpusdaCOntroller extends Controller
             DB::rollBack();
 
             return response()->json([
-                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+                'message' => 'Terjadi kesalahan: '.$e->getMessage(),
             ], 500);
         }
     }

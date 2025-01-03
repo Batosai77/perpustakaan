@@ -16,14 +16,15 @@ class CategoryController extends Controller
     {
         try {
             $categories = Kategoris::all();
+
             return response()->json([
-                "success" => true,
-                "data" => $categories
+                'success' => true,
+                'data' => $categories,
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "success" => false,
-                "message" => $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -35,14 +36,15 @@ class CategoryController extends Controller
     {
         try {
             $category = Kategoris::create($request->validated());
+
             return response()->json([
-                "success" => true,
-                "data" => $category
+                'success' => true,
+                'data' => $category,
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
-                "success" => false,
-                "message" => $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -54,20 +56,21 @@ class CategoryController extends Controller
     {
         try {
             $category = Kategoris::find($id);
-            if (!$category) {
+            if (! $category) {
                 return response()->json([
-                    "success" => false,
-                    "message" => "Category not found"
+                    'success' => false,
+                    'message' => 'Category not found',
                 ], 404);
             }
+
             return response()->json([
-                "success" => true,
-                "data" => $category
+                'success' => true,
+                'data' => $category,
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "success" => false,
-                "message" => $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -79,21 +82,22 @@ class CategoryController extends Controller
     {
         try {
             $category = Kategoris::find($id);
-            if (!$category) {
+            if (! $category) {
                 return response()->json([
-                    "success" => false,
-                    "message" => "Category not found"
+                    'success' => false,
+                    'message' => 'Category not found',
                 ], 404);
             }
             $category->update($request->validated());
+
             return response()->json([
-                "success" => true,
-                "data" => $category
+                'success' => true,
+                'data' => $category,
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "success" => false,
-                "message" => $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage(),
             ], 500);
         }
     }
@@ -105,22 +109,40 @@ class CategoryController extends Controller
     {
         try {
             $category = Kategoris::find($id);
-            if (!$category) {
+            if (! $category) {
                 return response()->json([
-                    "success" => false,
-                    "message" => "Category not found"
+                    'success' => false,
+                    'message' => 'Category not found',
                 ], 404);
             }
             $category->delete();
+
             return response()->json([
-                "success" => true,
-                "message" => "Category deleted"
+                'success' => true,
+                'message' => 'Category deleted',
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                "success" => false,
-                "message" => $e->getMessage()
+                'success' => false,
+                'message' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function search(string $name)
+    {
+        try {
+            $category = Kategoris::where('nama_kategori', 'like', "%$name%")->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $category,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 }

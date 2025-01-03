@@ -1,0 +1,22 @@
+/* Forr hover edit */
+
+.hover-edit:hover {
+    background: red;
+    position: relative;
+}
+
+.hover-edit__hover-content {
+    display: none;
+}
+
+.hover-edit:hover .hover-edit__hover-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(64, 81, 137, .6);
+}

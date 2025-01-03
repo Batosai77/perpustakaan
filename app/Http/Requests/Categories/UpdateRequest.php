@@ -23,15 +23,15 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nama_kategori" => "required|string|max:255|unique:kategoris,nama_kategori",
+            'nama_kategori' => 'required|string|max:255|unique:kategoris,nama_kategori',
         ];
     }
 
     public function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            "success" => false,
-            "message" => $validator->getMessageBag()
+            'success' => false,
+            'message' => $validator->getMessageBag(),
         ], 422));
     }
 }

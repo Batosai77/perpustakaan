@@ -1,12 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\PerpusdaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\PerpusdaController;
-use App\Http\Resources\PerpusdaResource;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -15,6 +14,9 @@ Route::get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::apiResource('perpusda', PerpusdaController::class)->middleware('auth:api');
-
-Route::apiResource('category', CategoryController::class)->middleware('auth:api');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::apiResource('perpusda', PerpusdaController::class);
+    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('books', BookController::class);
+    Route::get('books?category={category}', [BookController::class, 'getByCategory']);
+});
