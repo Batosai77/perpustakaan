@@ -37,7 +37,7 @@ class BookController extends Controller
     {
         try {
             $category = Kategoris::where('nama_kategori', $request->nama_kategori)->first();
-            if (! $category) {
+            if (!$category) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Category not found',
@@ -64,7 +64,7 @@ class BookController extends Controller
     {
         try {
             $buku = Buku::find($id);
-            if (! $buku) {
+            if (!$buku) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Book not found',
@@ -90,13 +90,13 @@ class BookController extends Controller
     {
         try {
             $buku = Buku::find($id);
-            if ($request->has('nama_kategori') && ! $category = Kategoris::where('nama_kategori', $request->nama_kategori)->first()) {
+            if ($request->has('nama_kategori') && !$category = Kategoris::where('nama_kategori', $request->nama_kategori)->first()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Category not found',
                 ], 404);
             }
-            if (! $buku) {
+            if (!$buku) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Book not found',
@@ -123,7 +123,7 @@ class BookController extends Controller
     {
         try {
             $buku = Buku::find($id);
-            if (! $buku) {
+            if (!$buku) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Book not found',
@@ -147,6 +147,23 @@ class BookController extends Controller
     {
         try {
             $books = Buku::where('nama_kategori', $category)->get();
+
+            return response()->json([
+                'success' => true,
+                'data' => $books,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function search(string $keyword)
+    {
+        try {
+            $books = Buku::where('judul', 'like', "%$keyword%")->get();
 
             return response()->json([
                 'success' => true,
